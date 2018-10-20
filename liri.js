@@ -5,22 +5,21 @@ const request = require("request")
 const keys = require("./keys")
 const moment = require("moment")
 
-
-let command = process.argv[2]
-let arg = process.argv[3]
-switch (command){
-    case "concert-this":
-        concert(arg)
-        break
-    case "spotify-this-song":
-        spotifySong(arg)
-        break
-    case "movie-this":
-        movie(arg)
-        break
-    case "do-what-it-says":
-        dowhatitsays(arg)
-        break
+function dostuff(command, arg){
+    switch (command){
+        case "concert-this":
+            concert(arg)
+            break
+        case "spotify-this-song":
+            spotifySong(arg)
+            break
+        case "movie-this":
+            movie(arg)
+            break
+        case "do-what-it-says":
+            dowhatitsays()
+            break
+    }
 }
 
 function concert(artist){
@@ -82,5 +81,13 @@ function movie(movie){
 }
 
 function dowhatitsays(){
-    
+    fs.readFile("random.txt", "utf-8", function(error, data){
+        if (error) {
+            return console.log(error);
+          }
+        let dataArr = data.split(",")
+        dostuff(dataArr[0], dataArr[1])
+    })
 }
+
+dostuff(process.argv[2], process.argv[3])
