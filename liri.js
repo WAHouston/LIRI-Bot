@@ -5,6 +5,7 @@ const request = require("request")
 const keys = require("./keys")
 const moment = require("moment")
 
+
 function dostuff(command, arg){
     switch (command){
         case "concert-this":
@@ -71,8 +72,9 @@ function movie(movie){
         let data = JSON.parse(body)
         console.log(data.Title)
         console.log(data.Year)
-        console.log("IMDB Rating: " + data.Ratings[0].Value)
-        console.log("Rotten Tomatoes Rating: " + data.Ratings[1].Value)
+        for (var i = 0; i < data.Ratings.length; i++){
+            console.log(data.Ratings[i].Source + ": " + data.Ratings[i].Value)
+        }
         console.log(data.Country)
         console.log(data.Language)
         console.log(data.Plot)
